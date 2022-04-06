@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@guildxyz/sdk": "^0.1.1",
     "@mantine/core": "^4.1.2",
     "@mantine/form": "^4.1.2",
     "@mantine/hooks": "^4.1.2",
