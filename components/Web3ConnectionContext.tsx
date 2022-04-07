@@ -48,7 +48,7 @@ const Web3ConnectionProvider = ({
               size="lg"
               fullWidth
               disabled={!connector.ready}
-              onClick={() => connect(connector)}
+              onClick={() => connect(connector).then(() => closeConnectionModal())}
             >
               {connector.name}
               {!connector.ready && " (unsupported)"}
