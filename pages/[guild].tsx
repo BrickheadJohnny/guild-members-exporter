@@ -36,7 +36,8 @@ const GuildPage: NextPage = () => {
         ?.filter((role) => selectedRoles.includes(role.id.toString()))
         ?.map((role) => role.members)
         ?.reduce((a, b) => a.concat(b), [])
-        ?.filter(unique),
+        ?.filter(unique)
+        ?.filter((member) => !!member),
     [selectedRoles]
   )
 
