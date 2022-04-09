@@ -4,6 +4,7 @@ import type { AppProps } from "next/app"
 import Head from "next/head"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { WagmiProvider } from "wagmi"
+import AppFooter from "../components/AppFooter"
 import AppHeader from "../components/AppHeader"
 import { Web3ConnectionProvider } from "../components/Web3ConnectionContext"
 import { connectors } from "../connectors"
@@ -27,6 +28,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => (
               <Container size="sm" py={20}>
                 <AppHeader />
                 <Component {...pageProps} />
+                <AppFooter />
               </Container>
             </QueryClientProvider>
           </Web3ConnectionProvider>
