@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   exportTrailingSlash: true,
+  exportPathMap: () => ({
+    "/": { page: "/" },
+  }),
 }
 
 module.exports = nextConfig
