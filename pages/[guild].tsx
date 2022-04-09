@@ -41,11 +41,10 @@ const GuildPage: NextPage = () => {
     [selectedRoles]
   )
 
-  const downloadAsTxtFile = () => {
-    const file = new Blob([membersList?.join("\n")], {
-      type: "text/plain",
-    })
-    window.open(URL.createObjectURL(file), "_blank")
+  const exportMembersAsCsv = () => {
+    const csvContent = "data:text/csv;charset=utf-8," + membersList?.join("\n")
+    const encodedUri = encodeURI(csvContent)
+    window.open(encodedUri, "_blank")
   }
 
   return (
@@ -79,8 +78,8 @@ const GuildPage: NextPage = () => {
         <Button disabled={!selectedRoles.length} onClick={copyMembersToClipboard}>
           {`Copy ${membersList?.length ?? 0} members to clipboard`}
         </Button>
-        <Button disabled={!selectedRoles.length} onClick={downloadAsTxtFile}>
-          {`Export ${membersList?.length ?? 0} members`}
+        <Button disabled={!selectedRoles.length} onClick={exportMembersAsCsv}>
+          {`Export ${membersList?.length ?? 0} members (.csv)`}
         </Button>
       </Group>
     </Box>
