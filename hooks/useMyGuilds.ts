@@ -1,21 +1,9 @@
-import { guild, user } from "@guildxyz/sdk"
 import { useQuery } from "react-query"
 import { useAccount } from "wagmi"
+import { guild } from "../../guild-sdk/build/src/client"
 
 const fetchMyGuilds = (address: string) =>
-  user
-    .getMemberships(address)
-    .then((memberships) =>
-      memberships
-        .map((membership) => membership.guildId)
-        .filter((guildId) => !!guildId)
-    )
-    .then((myGuildIds) =>
-      guild
-        .getAll()
-        .then((guilds) => guilds.filter((g) => myGuildIds.includes(g.id)))
-    )
-    .catch((_) => [])
+  guild.getByAddress(address, "admin").catch((_) => [])
 
 const useMyGuilds = () => {
   const [{ data: accountData }] = useAccount()
