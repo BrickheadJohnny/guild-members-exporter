@@ -1,6 +1,6 @@
+import { guild } from "@guildxyz/sdk"
 import { useQuery } from "react-query"
 import { useAccount } from "wagmi"
-import { guild } from "../../guild-sdk/build/src/client"
 
 const fetchMyGuilds = (address: string) =>
   guild.getByAddress(address, "admin").catch((_) => [])
