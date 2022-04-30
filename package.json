@@ -11,11 +11,9 @@
     "export": "next export"
   },
   "dependencies": {
-    "@guildxyz/sdk": "^0.1.1",
+    "@guildxyz/sdk": "^0.1.2",
     "@mantine/core": "^4.1.2",
-    "@mantine/form": "^4.1.2",
     "@mantine/hooks": "^4.1.2",
-    "@mantine/modals": "^4.1.2",
     "@mantine/next": "^4.1.2",
     "@mantine/notifications": "^4.1.2",
     "ethers": "^5.6.2",
