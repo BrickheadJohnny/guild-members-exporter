@@ -10,14 +10,16 @@ import {
 } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import { showNotification } from "@mantine/notifications"
-import type { NextPage } from "next"
+import type { GetServerSideProps, NextPage } from "next"
 import { useMemo, useState } from "react"
 import useGuild from "../hooks/useGuild"
 
-const unique = (value, index, self): boolean => self.indexOf(value) === index
+type Props = {
+  urlName: string
+}
 
-const GuildPage: NextPage = () => {
-  const { data, isLoading, error } = useGuild()
+const GuildPage: NextPage<Props> = ({ urlName }) => {
+  const { data, isLoading, error } = useGuild(urlName)
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
 
   const clipboard = useClipboard({ timeout: 500 })
@@ -30,16 +32,16 @@ const GuildPage: NextPage = () => {
     })
   }
 
-  const membersList = useMemo(
-    () =>
-      data?.roles
-        ?.filter((role) => selectedRoles.includes(role.id.toString()))
-        ?.map((role) => role.members)
-        ?.reduce((a, b) => a.concat(b), [])
-        ?.filter(unique)
-        ?.filter((member) => !!member),
-    [selectedRoles]
-  )
+  const membersList = useMemo(() => {
+    const mappedMembers = data?.roles
+      ?.filter((role) => selectedRoles.includes(role.id.toString()))
+      ?.map((role) => role.members)
+      ?.reduce((a, b) => a.concat(b), [])
+      ?.filter((member) => !!member)
+
+    // Returning only unique members
+    return [...new Set(mappedMembers)]
+  }, [selectedRoles])
 
   const exportMembersAsCsv = () => {
     const csvContent = "data:text/csv;charset=utf-8," + membersList?.join("\n")
@@ -86,4 +88,11 @@ const GuildPage: NextPage = () => {
   )
 }
 
+const getServerSideProps: GetServerSideProps = async (context) => ({
+  props: {
+    urlName: context.params.guild?.toString(),
+  },
+})
+
 export default GuildPage
+export { getServerSideProps }
