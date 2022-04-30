@@ -10,16 +10,12 @@ import {
 } from "@mantine/core"
 import { useClipboard } from "@mantine/hooks"
 import { showNotification } from "@mantine/notifications"
-import type { GetServerSideProps, NextPage } from "next"
+import type { NextPage } from "next"
 import { useMemo, useState } from "react"
 import useGuild from "../hooks/useGuild"
 
-type Props = {
-  urlName: string
-}
-
-const GuildPage: NextPage<Props> = ({ urlName }) => {
-  const { data, isLoading, error } = useGuild(urlName)
+const GuildPage: NextPage = () => {
+  const { data, isLoading, error } = useGuild()
   const [selectedRoles, setSelectedRoles] = useState<string[]>([])
 
   const clipboard = useClipboard({ timeout: 500 })
@@ -88,11 +84,4 @@ const GuildPage: NextPage<Props> = ({ urlName }) => {
   )
 }
 
-const getServerSideProps: GetServerSideProps = async (context) => ({
-  props: {
-    urlName: context.params.guild?.toString(),
-  },
-})
-
 export default GuildPage
-export { getServerSideProps }
